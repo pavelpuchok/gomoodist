@@ -1,0 +1,14 @@
+{
+  "sounds": [
+    {
+      "id": "animals/owl",
+      "enabled": true,
+      "volume": 0.8
+    },
+    {
+      "id": "rain/thunder",
+      "enabled": true,
+      "volume": 0.3
+    }
+  ]
+}

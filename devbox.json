@@ -1,0 +1,28 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.16.0/.schema/devbox.schema.json",
+  "packages": {
+    "go":           "1.25",
+    "gcc":          "15.1.0",
+    "pkg-config":   "latest",
+    "alsa-lib.dev": "",
+    "git":          "latest",
+    "ffmpeg":       "7.1",
+    "gtk3": {
+      "version": "latest",
+      "outputs": ["dev"]
+    },
+    "libayatana-appindicator": {
+      "version": "latest",
+      "outputs": ["dev"]
+    }
+  },
+  "shell": {
+    "init_hook": [],
+    "scripts": {
+      "download_assets": "./scripts/download_assets.sh"
+    }
+  },
+  "env": {
+    "PKG_CONFIG_PATH": "$DEVBOX_PACKAGES_DIR/lib/pkgconfig"
+  }
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gomoodist Settings</title>
+  <script src="//unpkg.com/alpinejs" defer></script>
+</head>
+
+<body x-data="{
+    sounds: {},
+      async fetchConfig() {
+        const res = await fetch('/api/v1/config');
+        this.sounds = (await res.json()).sounds || {};
+      },
+      async setSoundEnabled(id, enabled) {
+        await fetch(`/api/v1/sound/${id.replace('\/', '%2F')}/${enabled ? 'enable' : 'disable'}`, {
+          method: 'POST',
+        });
+        this.sounds[id].enabled = enabled;
+      },
+      async setSoundVolume(id, volume) {
+        await fetch(`/api/v1/sound/${id.replace('\/', '%2F')}/volume/${volume}`, {
+          method: 'POST',
+        });
+        this.sounds[id].volume = volume;
+      }
+  }" x-init="fetchConfig()">
+  <template x-for="(sound, id) in sounds" :key="id">
+    <div style="margin-bottom:1em;">
+      <label>
+        <input type="checkbox" :checked="sound.enabled" @change="setSoundEnabled(id, $event.target.checked)">
+        <span x-text="id"></span> Enabled
+      </label>
+      <input type="range" min="0" max="1" step="0.01" :value="sound.volume"
+        @input="setSoundVolume(id, $event.target.value)">
+      <span x-text="Number(sound.volume).toFixed(2)"></span>
+    </div>
+  </template>
+</body>
+
+</html>
